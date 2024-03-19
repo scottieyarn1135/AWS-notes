@@ -1,58 +1,61 @@
-
 # Page contents
 
-## Introduction
+# Introduction
 
 This is done to give you an idea about what the EC2 service is and what it can be used for.
 
-[[#What is an EC2 instance?]]
-[[#What is a virtual machine]]
-[[#What is the use case for the EC2 service?]]
-[[#Instance types]]
-[[#What operating systems can you use?]]
-Graviton VS x86: Processor wars
-Instance storage
-Security groups
-Public IP/Elastic IPs and Private IP addresses
-Nitro System
-Autoscaling
-launch templates
+- [What is an EC2 instance?](#what-is-an-EC2-instance)
+- [What is a virtual machine?](#what-is-a-virtual-machine)
+- [What is the use case for the EC2 service?](#what-is the-use-case-for-the-EC2-service)
+- [Instance types](#instance-types)
+- [What operating systems can you use?](#what-operating-systems-can-you-use)
+- [Graviton VS x86: Processor wars](#AWS-Graviton-VS-x86:The-great-processor-wars)
+- [Instance storage](#instance-storage)
+- [Security groups](#security-groups)
+- [Public IP/Elastic IPs and Private IP addresses](#public-IP/Elastic-IPs-and-Private-IP-addresses)
+- [Nitro System](#)
+- [Autoscaling](#)
+- [launch templates](#)
+- [Loadbalancing]()
+- [Burst balance]()
 
 Links to other documents that are used alongside the EC2 service:
-[[EBS]]
-VPC
-Route 53
-## Diagrams for setups 
+
+- [EBS]()
+- [VPC]()
+- [Route 53]()
+
+# Diagrams for setups
 
 Some Projects I have worked on and it can give you an idea about how some of the topics we have talked about in the Introduction work with each other.
 
-A simple Minecraft Server
+- [A simple Minecraft Server]()
 
-Simple apache webserver for a website
+- [Simple apache webserver for a website]()
 
-Loadbalance apache servers if there was more load
+- [Apache servers if there was more load]()
 
-Loadbalance a wordpress site with RDS and route53 - 
+- [Loadbalance a wordpress site with RDS and route53](#)
 
-Autoscaling to scale in and out if needed.
+- [Autoscaling to scale in and out.]()
 
-Monitoring the instances at scale.
+- [Monitoring the instances at scale.]()
+
 ## Edgecases
 
 Things I don't normally see but they are nice to know incase they are needed in the future.
 
-
-## What is an EC2 instance?
+## what-is-an-EC2-instance
 
 When I think of the word EC2 my first thought is a virtual machine.
 
-### What is a virtual machine
+## what-is-a-virtual-machine
 
 A virtual machine is a way where you can split up the resources that you PC has (The CPU, Memory and storage) and you are splitting it so that it can run another OS on your computer you can view this as a virtual computer - A lot of people use them day to day - To have a ton of servers from one massive server, To test and do dev work on a VM on your personal machine, For security because you can think of a virtual machine as it own thing if there is a virus or malware it is unlike to escape the virtual machine but it can happen.
 
-Now that we know that a virtual machine is a virtual computer we now  have a basic understand of what EC2 is it is a virtual machine service but how and why would we use this service?
+Now that we know that a virtual machine is a virtual computer we now have a basic understand of what EC2 is it is a virtual machine service but how and why would we use this service?
 
-## What is the use case for the EC2 service?
+## what-is-the-use-case-for-the-EC2-service
 
 The EC2 Service has many use cases I will list some examples I have created myself.
 
@@ -66,26 +69,58 @@ The EC2 Service has many use cases I will list some examples I have created myse
 	 </li>
 </ol>
 
-## Instance types
+## instance-types
+
+Instances don't come in one type there are multiple - Here are the types and the use cases around them - This list is from 2024:
+
+Instances can come in many different shapes and sizes a M6g is different from a M6i due to the processor so I will be breaking down the latter part of an instance name so that you know what the g and i mean in M6 and the other instance types
+### Additional Capability
+#### Processor families
+- **i** - This means it is an intel based processor, You will normally see this if you have multiple options for example if you can choose a AWS Graviton Processor or an AMD Processor. This is importent if you care about performance, Cost and if you application can be used on an ARM based processor.
+- **a** - This means it is an AMD based processor, This is normally a cheaper option then using an intel based processor but in benchmarks Intel tends to performs better but if you need a cheap x86 alternative then AMD is normally a option - It might be that you have tested a machine in production and you don't actually need the additional performance so you might rightsize to AMD instead to save a bit on costs.
+- **g** - This means this is using an AWS Graviton Processor - This is an arm based processor and it is normally the cheapest option and provides the best price to performance - The reason for this is due to the fact that AWS are moving towards ARM based processors due to the amount of energy they use and price to performance that comes with using a graviton processor. 
+#### Additional capabilities
+- **b** – EBS optimized
+- **d** – Instance store volumes
+- **n** – Network and EBS optimized
+- **e** – Extra storage or memory
+- **z** – High performance
+- **q** – Qualcomm inference accelerators
+- **flex** – Flex instance
+
+- **General Purpose** - This instance type tries to strike a balance between CPU and RAM<br> **USE CASES** - This is suited for **open source apps**, **gaming servers**, **microservices**<br>**Instance family names** - The **M series**, **MAC** and **T2,3,4** are in this group.
+  !["Image of all the EC2 option in the following order - M7g,M7i,M7i-flex,M7a,MAC,M6g,M6i,M6in,M6a,M5,M5n,M5zn,M5a,M4,T4g,T3,T3a,T2"](./pictures/EC2/GP_instance_types.png)
+- **Compute Optimised** - This is suited for tasks that require a lot of compute the weight for the instance type are less memory but the same amount of Vcpu.<br>**USE CASES** - This is suited for **High performance computing(HPC)**, **Batch processing**, **Ad serving**, **Video encoding**, **Gaming** **scientific modelling**, **distributed analytics**,**CPU based machine learning**<br> **Instance family name** - The **C series** are in this group.
+  !["Image of all the EC2 option in the following order - C7g,C7gn,C7i,C7a,C6g,C6gn,C6i,C6in,C6a,C5,C5n,C5a,C4"](./pictures/EC2/Compute-instance-types.png)
+- **Memory Optimised** - This is suited for tasks that require a lot of memory the weight for the instance type are more memory but less amount of Vcpus.<br>
+  This is suited for **Open-source databases**,**in-memory caches**,**Real-time big data analytics**.<br>
+	**Instance family name R, X, Z** and **High memory** are in this group.
 
 
+- **Accelerated Computing** -
 
+- **Storage Optimized**
 
-Instances don't come in one type there are multiple - Here are the types and the use cases around them:
+- **HPC Optimized**
 
-<ul>
-  <li><b>General Purpose</b> - This is suited for open source apps, gaming servers, microservices - It is General Purpose because it tries to strike a balance For CPU and RAM - The M seires, MAC and T2,3,4 are in this group.
-  </li>
-  <li><b>Compute Optimised</b>- This is suited for tasks that require a lot of compute the weight for the instance type are less memory but the same amount of Vcpu </li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-
-</ul>
 To read into the topic more or get information around Instance types check this <a href="https://aws.amazon.com/ec2/instance-types/">link</a>
 
-## What operating systems can you use?
+## what-operating-systems-can-you-use
+
+## AWS-Graviton-VS-x86:The-great-processor-wars
+
+## instance-storage
+
+## security-groups
+
+## public-IP/Elastic-IPs-and-Private-IP-addresses
 
 ## Nitro System
+
+## Autoscaling
+
+## launch-templates
+
+## Load-balancing
+
+## Burst-balance
