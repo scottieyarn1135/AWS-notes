@@ -93,12 +93,13 @@ Instances can come in many different shapes and sizes a M6g is different from a 
 - **Compute Optimised** - This is suited for tasks that require a lot of compute the weight for the instance type are less memory but the same amount of Vcpu.<br>**USE CASES** - This is suited for **High performance computing(HPC)**, **Batch processing**, **Ad serving**, **Video encoding**, **Gaming** **scientific modelling**, **distributed analytics**,**CPU based machine learning**<br> **Instance family name** - The **C series** are in this group.
   !["Image of all the EC2 option in the following order - C7g,C7gn,C7i,C7a,C6g,C6gn,C6i,C6in,C6a,C5,C5n,C5a,C4"](./pictures/EC2/Compute-instance-types.png)
 - **Memory Optimised** - This is suited for tasks that require a lot of memory the weight for the instance type are more memory but less amount of Vcpus.<br>
-  This is suited for **Open-source databases**,**in-memory caches**,**Real-time big data analytics**.<br>
+  This is suited for **Open-source databases**,**in-memory caches**,**Real-time big data analytics In-memory databases (e.g. SAP HANA, Redis) traditional databases (e.g. Oracle DB, Microsoft SQL Server), and in-memory analytics (e.g. SAS, Aerospike).** <br>
 	**Instance family name R, X, Z** and **High memory** are in this group.
 
 
-- **Accelerated Computing** -
-
+- **Accelerated Computing** - - This is suited for tasks that require a GPU (Graphic processing unit) or hardware accelerators, or co-processors - This is due to that the fact that they can carry out the following tasks - floating point number calculations, graphics processing, or data pattern matching - This is works better on dedicated hardware then your CPU. <br>
+  This is suited for **Generative AI applications, including question answering, code generation, video and image generation, speech recognition,**  **Android game streaming, machine learning inference, graphics rendering, autonomous vehicle simulations** and more.
+  
 - **Storage Optimized**
 
 - **HPC Optimized**
@@ -106,7 +107,9 @@ Instances can come in many different shapes and sizes a M6g is different from a 
 To read into the topic more or get information around Instance types check this <a href="https://aws.amazon.com/ec2/instance-types/">link</a>
 
 ## what-operating-systems-can-you-use
+You can use 100s of operating systems - Would you like to use arch linux - There is an AMI (Amazon Machine Image) you can spin up - You want to use fedora server or ubuntu they have an ami for them as well - Notice how I mentioned different linux distributions there are many flavours of linux and on AWS that is no different from ubuntu to red hat to oracle there are many images for a distribution you need.
 
+Windows server is also an option if you need to host an active directory server and you do not want to use a service like AWS directory you could create a 
 ## AWS-Graviton-VS-x86:The-great-processor-wars
 
 ## instance-storage
